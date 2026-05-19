@@ -364,12 +364,10 @@
       padding: 40px 48px 40px 0;
       border-right: 1px solid var(--border);
     }
-    .feat:nth-child(3n) { border-right: none; padding-right: 0; }
-    .feat:nth-child(n+4) { border-top: 1px solid var(--border); padding-top: 40px; }
-    .feat:nth-child(4), .feat:nth-child(5) { padding-left: 0; }
-    .feat:nth-child(4) { padding-right: 48px; }
-    .feat:nth-child(5) { padding-left: 48px; padding-right: 48px; }
-    .feat:nth-child(6) { padding-left: 48px; }
+    .feat:nth-child(3n+2),
+    .feat:nth-child(3n)   { padding-left: 48px; }
+    .feat:nth-child(3n)   { border-right: none; padding-right: 0; }
+    .feat:nth-child(n+4)  { border-top: 1px solid var(--border); }
 
     .feat-num {
       font-size: 0.58rem;
@@ -588,12 +586,16 @@
       nav.scrolled { padding: 14px 28px; }
       .nav-links { display: none; }
       .feat-grid { grid-template-columns: 1fr; }
-      .feat, .feat:nth-child(3n), .feat:nth-child(n+4) {
-        border-right: none; border-top: 1px solid var(--border);
-        padding: 36px 0; margin: 0;
+      .feat,
+      .feat:nth-child(3n+2),
+      .feat:nth-child(3n),
+      .feat:nth-child(n+4) {
+        padding: 36px 0;
+        padding-left: 0;
+        border-right: none;
+        border-top: 1px solid var(--border);
       }
       .feat:first-child { border-top: none; }
-      .feat:nth-child(4), .feat:nth-child(5), .feat:nth-child(6) { padding-left: 0; }
       .specs-wrap { grid-template-columns: 1fr; gap: 52px; }
       .ov-tr { top: auto; right: auto; bottom: 14%; left: 6%; text-align: left; }
       .ov-tr p { margin-left: 0; }
@@ -702,13 +704,13 @@
         <h3>Adaptive Intelligence</h3>
         <p>LUMÉA learns your routine, preferences, and rhythm. It surfaces exactly what you need — before you know you need it.</p>
       </div>
-      <div class="feat" style="padding-left:48px">
+      <div class="feat">
         <div class="feat-num">02</div>
         <div class="feat-rule"></div>
         <h3>Ambient Wellness</h3>
         <p>Built-in biometric sensing reads subtle signals — stress, focus, energy — responding with calm, personalised nudges.</p>
       </div>
-      <div class="feat" style="padding-left:48px">
+      <div class="feat">
         <div class="feat-num">03</div>
         <div class="feat-rule"></div>
         <h3>Invisible Technology</h3>
@@ -720,13 +722,13 @@
         <h3>Handcrafted Frame</h3>
         <p>Every LUMÉA is shaped from sustainably sourced American walnut, finished by hand in limited production runs.</p>
       </div>
-      <div class="feat" style="padding-left:48px">
+      <div class="feat">
         <div class="feat-num">05</div>
         <div class="feat-rule"></div>
         <h3>Pure Mirror Glass</h3>
         <p>6mm optically pure glass with a proprietary coating achieves 99.7% reflectance while concealing a full 4K display.</p>
       </div>
-      <div class="feat" style="padding-left:48px">
+      <div class="feat">
         <div class="feat-num">06</div>
         <div class="feat-rule"></div>
         <h3>Private by Design</h3>
