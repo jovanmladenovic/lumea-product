@@ -915,13 +915,34 @@
     }, { passive: true });
 
     // ── CTA FORM ──────────────────────────────────────────────
-    document.getElementById('cta-form').addEventListener('submit', e => {
+    document.getElementById('cta-form').addEventListener('submit', async e => {
       e.preventDefault();
-      const btn = document.getElementById('cta-btn');
-      btn.textContent = 'You\'re on the list ✓';
-      btn.classList.add('sent');
-      btn.disabled = true;
-      document.getElementById('cta-email').disabled = true;
+      const btn   = document.getElementById('cta-btn');
+      const input = document.getElementById('cta-email');
+      const FORMSPREE_ID = 'xpqnqqgo';
+
+      btn.textContent = 'Sending…';
+      btn.disabled    = true;
+      input.disabled  = true;
+
+      try {
+        const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body:    JSON.stringify({ email: input.value })
+        });
+
+        if (res.ok) {
+          btn.textContent = 'You\'re on the list ✓';
+          btn.classList.add('sent');
+        } else {
+          throw new Error('Server error');
+        }
+      } catch {
+        btn.textContent = 'Try again';
+        btn.disabled    = false;
+        input.disabled  = false;
+      }
     });
 
   })();
