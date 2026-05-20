@@ -819,10 +819,7 @@
 
       const cw = canvas.width, ch = canvas.height;
       const iw = img.naturalWidth, ih = img.naturalHeight;
-      // Portrait viewports (mobile/tablet): fit by width so all components stay visible.
-      // Landscape viewports (desktop): cover for full bleed.
-      // Dark bg (#0d0d0d) matches image bg exactly, so letterboxing is invisible.
-      const s  = (cw / ch) < (iw / ih) ? cw / iw : Math.max(cw / iw, ch / ih);
+      const s  = Math.max(cw / iw, ch / ih);
       const sw = iw * s, sh = ih * s;
       const ox = (cw - sw) * 0.5, oy = (ch - sh) * 0.5;
 
