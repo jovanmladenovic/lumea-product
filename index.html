@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,200;0,14..32,300;0,14..32,400;0,14..32,500;1,14..32,300&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%23c9a96e'/></svg>">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -813,6 +814,10 @@
     window.addEventListener('resize', resize, { passive: true });
     resize();
 
+    function easeInOut(t) {
+      return t < 0.5 ? 2*t*t : -1 + (4 - 2*t)*t;
+    }
+
     function draw(idx) {
       const img = imgs[Math.max(0, Math.min(FRAMES - 1, idx))];
       if (!img?.complete || !img.naturalWidth) return;
@@ -821,7 +826,26 @@
       const iw = img.naturalWidth, ih = img.naturalHeight;
       const s  = Math.max(cw / iw, ch / ih);
       const sw = iw * s, sh = ih * s;
-      const ox = (cw - sw) * 0.5, oy = (ch - sh) * 0.5;
+      const oy = (ch - sh) * 0.5;
+
+      let ox = (cw - sw) * 0.5;
+
+      // Horizontal pan on portrait screens (mobile/tablet) where sw > cw.
+      // Phase 1 (0–33% scroll): center → right (left image edge meets left of canvas).
+      // Phase 2 (33–100% scroll): right → left (right image edge meets right of canvas).
+      // Inherits smoothness from the lerped curF — no extra interpolation needed.
+      if (sw > cw + 10) {
+        const t        = curF / (FRAMES - 1);
+        const centerOx = (cw - sw) * 0.5;   // centered
+        const rightOx  = 0;                  // left edge of image = left edge of canvas
+        const leftOx   = cw - sw;            // right edge of image = right edge of canvas
+
+        if (t <= 0.33) {
+          ox = centerOx + (rightOx - centerOx) * easeInOut(t / 0.33);
+        } else {
+          ox = rightOx  + (leftOx  - rightOx)  * easeInOut((t - 0.33) / 0.67);
+        }
+      }
 
       ctx.fillStyle = BG;
       ctx.fillRect(0, 0, cw, ch);
