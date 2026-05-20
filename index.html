@@ -840,10 +840,10 @@
         const rightOx  = 0;                  // left edge of image = left edge of canvas
         const leftOx   = cw - sw;            // right edge of image = right edge of canvas
 
-        if (t <= 0.33) {
-          ox = centerOx + (rightOx - centerOx) * easeInOut(t / 0.33);
+        if (t <= 0.5) {
+          ox = centerOx + (rightOx - centerOx) * easeInOut(t / 0.5);
         } else {
-          ox = rightOx  + (leftOx  - rightOx)  * easeInOut((t - 0.33) / 0.67);
+          ox = rightOx  + (leftOx  - rightOx)  * easeInOut((t - 0.5) / 0.5);
         }
       }
 
